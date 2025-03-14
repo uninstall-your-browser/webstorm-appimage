@@ -8,4 +8,4 @@ Comment=The JavaScript and TypeScript IDE by JetBrains
 Categories=Development;IDE;
 Terminal=false
 StartupNotify=true
-StartupWMClass=jetbrains-webstorm-ce
+StartupWMClass=jetbrains-webstorm
