@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Webstorm
+Exec=webstorm %f
+Icon=Webstorm
+Comment=The JavaScript and TypeScript IDE by JetBrains
+Categories=Development;IDE;
+Terminal=false
+StartupNotify=true
+StartupWMClass=jetbrains-webstorm-ce

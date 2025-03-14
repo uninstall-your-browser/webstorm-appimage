@@ -1,0 +1,34 @@
+name: Build AppImage
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 */2 * *"
+  push:
+    branches:
+      - "master"
+
+jobs:
+  version:
+    name: Webstorm AppImage
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build
+        id: build
+        uses: uninstall-your-browser/appimage-bash@v1.2
+        with:
+          version_url: "https://data.services.jetbrains.com/products/download?code=WS&platform=linux"
+          version_file: "product-info.json"
+          version_bash: "jq -r  .version"
+          version_icon: "webstorm.svg"
+          version_directory: "opt/webstorm"
+      - name: Create release
+        if: ${{ env.APP_UPDATE_NEEDED == 'true' }}
+        run: gh release create ${{ env.APP_VERSION }} -t "${{ env.APP_NAME }} AppImage ${{ env.APP_VERSION }}"
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Upload binaries
+        if: ${{ env.APP_UPDATE_NEEDED == 'true' }}
+        run: gh release upload ${{ env.APP_VERSION }} dist/* --clobber
+        env:
+          GH_TOKEN: ${{ github.token }}
